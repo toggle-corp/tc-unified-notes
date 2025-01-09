@@ -1,91 +1,24 @@
-# React Base App
+# Tc Global Notes Dashboard
 
-React base app with some oompf
+Dashboard for all the notes of togglecorp
 
-## What is included?
+## Built with
+[![React][react-shields]][react-url] [![Vite][vite-shields]][vite-url] [![Typescript][typescript-shields]][typescript-url]
 
-### Vite
+### Prerequisites
 
-- Sourcemaps are generated on production build
-- `tsc`, `eslint` and `stylelint` are run on production build.
-- All of the assets will be compressed on production build.
-- The build is be placed under `build/` directory
+To begin, ensure you have network access. Then, you'll need the following:
 
-### React
+1. [Git](https://git-scm.com/)
+2. [Node.JS](https://nodejs.org/en/) version >=18 / 20+
+3. [Pnpm](https://pnpm.io/)
+4. Alternatively, you can use [Docker](https://www.docker.com/) to build the application.
 
-- Vite is configured with React Refresh
-- SWC is used instead of Babel
-
-### PostCSS
-
-PostCSS is configured with the following plugins:
-
-- Preset Env
-- Nested CSS
-- Normalize CSS
-- Autoprefixer
-- CSS Modules
-
-### Web Fonts
-
-- Web fonts are downloaded and bundled in the production build.
-- Valid web font providers are:
-  - Google Fonts
-  - Bunny Fonts
-  - Fontshare
-
-### SVG Imports
-
-- SVGR handles all type of SVG and transforms it into a React component.
-
-### Absolute Imports
-
-- Vite is configured to resolve absolute imports defined on `tsconfig.json`
-
-### Environment Variables
-
-Only environment variables prefixed by `APP_` will be passed to the application
-
-Variables can be defined using:
-
-- `.env` file
-  - Use `.env` file to define secrets.
-- `docker-compose` file
-  - Use `docker-compose` file to define rest of the env variables.
-
-The user defined environment variables are validated using the configuration at `./env.ts`
-The typings for environment variables are defined at `./src/declarations/env.d.ts`.
-
-### Git Revision
-
-The commit hash is passed to the application through the environment variable `APP_COMMIT_HASH`
-
-### Test
-
-- `vitest` is used to run tests
-
-### Checks
-
-- `stylelint` is used to lint css files
-- `eslint` is used to lint javascript and typescript files
-- `tsc` is used to typecheck typescript files
-- `knip` to used to detect unused javascript and typescript files
-
-### Docker
-
-Docker is setup to run vite on port 3000
-
-### Github Actions
-
-- A workflow is setup to run when:
-  - new commit is pushed to develop branch
-  - or a pull request to develop branch is opened
-- It checks for unused files, lint issues, failed tests and failed builds.
-
-### Pull Request Template
-
-- A generic pull request template is included.
-
-## What needs to be included?
-
-[Checklist](CHECKLIST.md)
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[react-shields]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
+[react-url]: https://reactjs.org/
+[vite-shields]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
+[vite-url]: https://vitejs.dev/
+[typescript-shields]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[typescript-url]: https://www.typescriptlang.org/
