@@ -1,3 +1,5 @@
+import '@togglecorp/toggle-ui/build/index.css';
+
 import {
     createBrowserRouter,
     RouterProvider,
