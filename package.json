@@ -1,13 +1,11 @@
 {
-    "name": "tc-global-notes",
+    "name": "tc-unified-notes",
     "private": true,
     "version": "0.0.0",
     "type": "module",
     "scripts": {
         "start": "vite",
-        "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview",
         "test": "vitest",
         "coverage": "vitest run --coverage",
         "typecheck": "tsc",
@@ -17,6 +15,10 @@
         "lint:css": "stylelint \"./src/**/*.css\"",
         "lint:unused": "knip --tags=-knipignore",
         "postinstall": "patch-package"
+    },
+    "engines": {
+        "node": "20",
+        "pnpm": "8.15.9"
     },
     "dependencies": {
         "@togglecorp/fujs": "^2.0.0",
@@ -67,5 +69,5 @@
         "vite-tsconfig-paths": "^4.2.0",
         "vitest": "^1.3.1"
     },
-    "packageManager": "pnpm@8.6.0+sha1.71f9126a20cd3d00fa47c188f956918858180e54"
+    "packageManager": "pnpm@8.15.9"
 }
