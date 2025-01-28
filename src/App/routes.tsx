@@ -44,9 +44,13 @@ const home = myWrapRoute({
     parent: root,
 });
 
-export const wrappedRoutes = {
+const wrappedRoutes = {
     root,
     home,
 };
 
 export const unwrappedRoutes = unwrapRoute(Object.values(wrappedRoutes));
+
+export default wrappedRoutes;
+
+export type WrappedRoutes = typeof wrappedRoutes;

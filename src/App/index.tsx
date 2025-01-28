@@ -5,13 +5,17 @@ import {
     RouterProvider,
 } from 'react-router-dom';
 
-import { unwrappedRoutes } from './routes';
+import RouteContext from '#contexts/route';
+
+import wrappedRoutes, { unwrappedRoutes } from './routes';
 
 const router = createBrowserRouter(unwrappedRoutes);
 
 function App() {
     return (
-        <RouterProvider router={router} />
+        <RouteContext.Provider value={wrappedRoutes}>
+            <RouterProvider router={router} />
+        </RouteContext.Provider>
     );
 }
 
