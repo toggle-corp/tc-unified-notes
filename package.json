@@ -23,7 +23,6 @@
     "dependencies": {
         "@togglecorp/fujs": "^2.0.0",
         "@julr/vite-plugin-validate-env": "^1.1.1",
-        "@togglecorp/toggle-form": "^2.0.4",
         "@togglecorp/toggle-ui": "^0.18.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

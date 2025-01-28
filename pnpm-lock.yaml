@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -11,9 +11,6 @@ dependencies:
   '@togglecorp/fujs':
     specifier: ^2.0.0
     version: 2.0.0
-  '@togglecorp/toggle-form':
-    specifier: ^2.0.4
-    version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
   '@togglecorp/toggle-ui':
     specifier: ^0.18.3
     version: 0.18.3(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0)
@@ -1568,24 +1565,6 @@ packages:
       '@babel/runtime': 7.26.0
     dev: false
 
-  /@togglecorp/fujs@2.2.0:
-    resolution: {integrity: sha512-OuoQ9Bj7SiI2sTLpaM/HivU6HpSbZ3ANBIn7f9KUz5eFcfwBBEDvjI+4ah6WktJEYTUKY4RxX37z64qOrTJSwA==}
-    dependencies:
-      '@babel/runtime-corejs3': 7.26.0
-    dev: false
-
-  /@togglecorp/toggle-form@2.0.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-+EzRzXK/PKlisu44yARpxOkoeowz+0oKk2Rl3CdhxtBfTVfzG28aHAklDTubTBssS8hneGBTav2aInCqmwChfg==}
-    peerDependencies:
-      react: ^18.2.0
-      react-dom: ^18.2.0
-    dependencies:
-      '@babel/runtime-corejs3': 7.26.0
-      '@togglecorp/fujs': 2.2.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
   /@togglecorp/toggle-ui@0.18.3(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-fRnKVmuoUhG10Z0a2op/CB7Mnoo4c5mGTD2nFBURm3FzwTWNrg2qZ0JYeKQdng6VOLxL1zTR5QSBsoGzQ0YPHA==}
     peerDependencies:
@@ -2379,6 +2358,7 @@ packages:
   /clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -2693,6 +2673,7 @@ packages:
 
   /defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
+    requiresBuild: true
     dependencies:
       clone: 1.0.4
     dev: true
@@ -7207,7 +7188,6 @@ packages:
     name: stylelint-no-unused-selectors
     version: 1.0.4
     engines: {node: '>=8.16.0'}
-    prepare: true
     requiresBuild: true
     peerDependencies:
       stylelint: ^15.5.0
