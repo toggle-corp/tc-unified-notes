@@ -4,17 +4,33 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from 'react-router-dom';
+import { RequestContext } from '@togglecorp/toggle-request';
 
 import RouteContext from '#contexts/route';
+import {
+    unifiedError,
+    unifiedOptions,
+    unifiedResponse,
+    unifiedUrls,
+} from '#utils/restRequest/unified';
 
 import wrappedRoutes, { unwrappedRoutes } from './routes';
+
+const requestContextValue = {
+    transformUrl: unifiedUrls,
+    transformOptions: unifiedOptions,
+    transformResponse: unifiedResponse,
+    transformError: unifiedError,
+};
 
 const router = createBrowserRouter(unwrappedRoutes);
 
 function App() {
     return (
         <RouteContext.Provider value={wrappedRoutes}>
-            <RouterProvider router={router} />
+            <RequestContext.Provider value={requestContextValue}>
+                <RouterProvider router={router} />
+            </RequestContext.Provider>
         </RouteContext.Provider>
     );
 }

@@ -11,6 +11,9 @@ dependencies:
   '@togglecorp/fujs':
     specifier: ^2.0.0
     version: 2.0.0
+  '@togglecorp/toggle-request':
+    specifier: 1.0.0-beta.3
+    version: 1.0.0-beta.3(react-dom@18.2.0)(react@18.2.0)
   '@togglecorp/toggle-ui':
     specifier: ^0.18.3
     version: 0.18.3(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0)
@@ -1563,6 +1566,24 @@ packages:
     resolution: {integrity: sha512-Fx5SF9kusbf35uT2WYlI6gdqqSL/e3JN4urAyB2O+jPz1VkG2I85VRqFxGjrg4m/ZZH+HRyGgLhSDn2V8LNdjA==}
     dependencies:
       '@babel/runtime': 7.26.0
+    dev: false
+
+  /@togglecorp/fujs@2.2.0:
+    resolution: {integrity: sha512-OuoQ9Bj7SiI2sTLpaM/HivU6HpSbZ3ANBIn7f9KUz5eFcfwBBEDvjI+4ah6WktJEYTUKY4RxX37z64qOrTJSwA==}
+    dependencies:
+      '@babel/runtime-corejs3': 7.26.0
+    dev: false
+
+  /@togglecorp/toggle-request@1.0.0-beta.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-q36QiIGkmWtJUrgrpLvPbwIx9MrRZI/dNqI0P16oLQuboc2ZBvWjBWnfHgIlzWDj3gGgBfAzaSzS+DTlNF3tQw==}
+    peerDependencies:
+      react: ^17.0.2
+      react-dom: ^17.0.2
+    dependencies:
+      '@babel/runtime-corejs3': 7.26.0
+      '@togglecorp/fujs': 2.2.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@togglecorp/toggle-ui@0.18.3(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0):
