@@ -1,8 +1,9 @@
-version: '3.8'
 services:
   react:
-    build: .
-    command: sh -c 'pnpm install && pnpm dev --host'
+    build:
+      context: ./
+      target: dev
+    command: sh -c 'pnpm install && pnpm start --host'
     environment:
       APP_TITLE: ${APP_TITLE:-TC Global Notes}
     volumes:
