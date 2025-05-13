@@ -7,6 +7,7 @@ import {
     IoMenu,
     IoSearchOutline,
     IoSettings,
+    IoTrash,
 } from 'react-icons/io5';
 import {
     Button,
@@ -19,17 +20,18 @@ import {
 } from '@togglecorp/toggle-ui';
 
 import Container from '#components/Container';
+import { createElementColumn } from '#components/CreateElementColumn';
 import Navbar from '#components/Navbar';
 import Page from '#components/Page';
 
 import styles from './styles.module.css';
 
-const PAGE_SIZE = 10;
 type NotesListTable = {
     url: string;
     id: string
 };
 const keySelector = (option: NotesListTable) => option.id;
+const PAGE_SIZE = 10;
 
 /** @knipignore */
 // eslint-disable-next-line import/prefer-default-export
@@ -37,11 +39,20 @@ export function Component() {
     const [page, setPage] = useState<number>(1);
 
     const columns = useMemo(() => ([
-        createStringColumn<NotesListTable, string>(
+        createElementColumn<NotesListTable, string, {url: string}>(
             'url',
             'URL',
-            (item) => (item.url),
-            { columnClassName: styles.column },
+            ({ url }) => (
+                <a
+                    className={styles.actions}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {url}
+                </a>
+            ),
+            (_key, item) => ({ url: item.url }),
         ),
         createDateColumn<NotesListTable, string>(
             'createdAt',
@@ -67,10 +78,22 @@ export function Component() {
             (item) => (item.url),
             { sortable: true },
         ),
-        createStringColumn<NotesListTable, string>(
+        createElementColumn<NotesListTable, string, {id:number}>(
             'actions',
             'Actions',
-            (item) => (item.url),
+            () => (
+                <Button
+                    name={undefined}
+                    onClick={() => {}}
+                    title="delete"
+                    transparent
+                >
+                    <IoTrash />
+                </Button>
+            ),
+            (_key, datum) => ({
+                id: Number(datum.id),
+            }),
         ),
     ]), []);
 
