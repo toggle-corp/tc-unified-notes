@@ -3,7 +3,10 @@
         "paths": {
             "#views/*": ["./src/views/*"],
             "#utils/*": ["./src/utils/*"],
-            "#contexts/*": ["./src/contexts/*"]
+            "#configs/*": ["./src/configs/*"],
+            "#contexts/*": ["./src/contexts/*"],
+            "#components/*": ["./src/components/*"],
+            "#hooks/*": ["./src/hooks/*"],
         },
 
         "target": "ESNext",

@@ -1,3 +1,32 @@
-.card {
-    padding: var(--padding-medium);
+.actions{
+    display:flex;
+    justify-content: space-between;
 }
+.filters{
+    display:flex;
+    justify-content: space-between;
+
+    .filters-container{
+        display:flex;
+        gap: var(--un-spacing-lg);
+    }
+
+    .filter-actions{
+        display:flex;
+    }
+}
+.table {
+    background-color: var(--un-color-background);
+    .header-row {
+     
+        .header-cell {
+            >* {
+                font-weight: var(--un-font-weight-bold);
+            }
+        }
+    } 
+    .column{
+        width: 0%;
+        min-width:10rem;
+    }
+} 

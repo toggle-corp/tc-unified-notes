@@ -1,0 +1,31 @@
+.heading {
+    --font-size: var(--un-font-size-3xl);
+    --line-height: var(--un-line-height-sm);
+    margin: 0;
+    line-height: var(--line-height);
+    font-size: var(--font-size);
+
+    &.level-one {
+        --font-size: var(--un-font-size-5xl);
+    }
+
+    &.level-two {
+        --font-size: var(--un-font-size-4xl);
+    }
+
+    &.level-three {
+        --font-size: var(--un-font-size-3xl);
+    }
+
+    &.level-four {
+        --font-size: var(--un-font-size-2xl);
+    }
+
+    &.level-five {
+        --font-size: var(--un-font-size-xl);
+    }
+
+    &.level-six {
+        --font-size: var(--un-font-size-lg);
+    }
+}
