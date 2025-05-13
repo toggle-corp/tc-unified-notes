@@ -119,6 +119,7 @@ export const unifiedOptions: UnifiedContextInterface['transformOptions'] = (
     const val: ReturnType<UnifiedContextInterface['transformOptions']> = {
         method,
         headers: {
+            Accept: CONTENT_TYPE_JSON,
             'Content-Type': CONTENT_TYPE_JSON,
         },
         ...otherOptions,

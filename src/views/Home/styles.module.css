@@ -25,8 +25,17 @@
             }
         }
     } 
-    .column{
-        width: 0%;
-        min-width:10rem;
+
+    .note-column{
+        max-width:15rem;
     }
 } 
+.url-action{
+    width: 0;
+    text-decoration: none;
+    color: var(--un-color-text);
+
+    &:hover {
+        text-decoration:underline;
+    }
+}
