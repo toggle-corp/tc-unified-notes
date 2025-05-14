@@ -26,6 +26,7 @@ import useFilterState from '#hooks/useFilterState';
 import styles from './styles.module.css';
 
 type NotesList = {
+    title: string;
     fullLink: string;
     id: string;
     createdAt: string;
@@ -59,26 +60,26 @@ export function Component() {
 
     const {
         response: notesResponse,
-    } = useRequest({
+    } = useRequest<NotesList[]>({
         url: '/notes',
         pathVariables: {},
     });
 
     const columns = useMemo(() => ([
-        createElementColumn<NotesListTable, string, { url: string }>(
-            'fullLink',
-            'URL',
-            ({ url }) => (
+        createElementColumn<NotesListTable, string, { url: string; title: string }>(
+            'title',
+            'Title',
+            ({ url, title }) => (
                 <a
                     className={styles.urlAction}
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {url}
+                    {title}
                 </a>
             ),
-            (_key, item) => ({ url: item.fullLink }),
+            (_key, item) => ({ url: item.fullLink, title: item.title }),
             { columnClassName: styles.noteColumn },
         ),
         createDateColumn<NotesListTable, string>(
@@ -207,7 +208,7 @@ export function Component() {
                             infoHidden
                             itemsPerPageControlHidden
                             activePage={page}
-                            itemsCount={2}
+                            itemsCount={notesResponse?.length || 0}
                             maxItemsPerPage={PAGE_SIZE}
                             onActivePageChange={setPage}
                         />

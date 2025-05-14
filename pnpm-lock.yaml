@@ -11,6 +11,9 @@ dependencies:
   '@togglecorp/fujs':
     specifier: ^2.0.0
     version: 2.0.0
+  '@togglecorp/toggle-form':
+    specifier: ^2.0.4
+    version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
   '@togglecorp/toggle-request':
     specifier: 1.0.0-beta.3
     version: 1.0.0-beta.3(react-dom@18.2.0)(react@18.2.0)
@@ -1575,6 +1578,18 @@ packages:
     resolution: {integrity: sha512-OuoQ9Bj7SiI2sTLpaM/HivU6HpSbZ3ANBIn7f9KUz5eFcfwBBEDvjI+4ah6WktJEYTUKY4RxX37z64qOrTJSwA==}
     dependencies:
       '@babel/runtime-corejs3': 7.26.0
+    dev: false
+
+  /@togglecorp/toggle-form@2.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-+EzRzXK/PKlisu44yARpxOkoeowz+0oKk2Rl3CdhxtBfTVfzG28aHAklDTubTBssS8hneGBTav2aInCqmwChfg==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@babel/runtime-corejs3': 7.26.0
+      '@togglecorp/fujs': 2.2.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@togglecorp/toggle-request@1.0.0-beta.3(react-dom@18.2.0)(react@18.2.0):
