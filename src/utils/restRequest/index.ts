@@ -8,6 +8,7 @@ import {
 
 import { TransformedError } from './unified';
 
+/** @knipignore */
 // eslint-disable-next-line max-len
 const useUnifiedLazyRequest: <R, C = null>(requestOptions: LazyRequestOptions<R, null, C, null>) => {
     response: R | undefined;

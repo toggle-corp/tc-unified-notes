@@ -29,10 +29,26 @@ type NotesList = {
     title: string;
     fullLink: string;
     id: string;
-    createdAt: string;
+    content: string;
     author: string;
     permission: string;
-    updatedAt: string;
+    owner?: {
+        id: string;
+        email: string;
+        profile: string | null;
+        createdAt: string;
+        updatedAt: string | null;
+    };
+};
+
+type QueryParams = {
+    search?: string;
+    page?: number;
+    pageSize?: number;
+};
+
+type PathVariables = {
+    id?: string;
 };
 
 type NotesListTable = NonNullable<NotesList>;
@@ -58,15 +74,20 @@ export function Component() {
             pageSize: PAGE_SIZE,
         });
 
+    const query = useMemo(() => Object.fromEntries(
+        Object.entries(filter).filter(([, value]) => value),
+    ), [filter]);
+
     const {
         response: notesResponse,
-    } = useRequest<NotesList[]>({
+    } = useRequest<NotesList[], QueryParams, PathVariables>({
         url: '/notes',
+        query,
         pathVariables: {},
     });
 
     const columns = useMemo(() => ([
-        createElementColumn<NotesListTable, string, { url: string; title: string }>(
+        createElementColumn<NotesList, string, { url: string; title: string }>(
             'title',
             'Title',
             ({ url, title }) => (
@@ -82,54 +103,50 @@ export function Component() {
             (_key, item) => ({ url: item.fullLink, title: item.title }),
             { columnClassName: styles.noteColumn },
         ),
-        createDateColumn<NotesListTable, string>(
-            'createdAt',
-            'Created at',
-            (item) => item.createdAt,
-            {
-                columnClassName: styles.noteColumn,
-            },
+        createStringColumn<NotesList, string>(
+            'ownerEmail',
+            'Created by',
+            (item) => item.owner?.email,
+            { columnClassName: styles.noteColumn },
         ),
-        createStringColumn<NotesListTable, string>(
+        createStringColumn<NotesList, string>(
             'author',
             'Author',
             (item) => item.author,
-            {
-                columnClassName: styles.column,
-            },
+            { columnClassName: styles.noteColumn },
         ),
-        createStringColumn<NotesListTable, string>(
+        createStringColumn<NotesList, string>(
             'permission',
             'Permission',
             (item) => item.permission,
-            {
-                columnClassName: styles.column,
-            },
+            { columnClassName: styles.noteColumn },
         ),
-        createDateColumn<NotesListTable, string>(
-            'updatedAt',
+        createDateColumn<NotesList, string>(
+            'createdAt',
+            'Created at',
+            (item) => item.owner?.createdAt,
+            { columnClassName: styles.noteColumn },
+        ),
+        createStringColumn<NotesList, string>(
+            'updateAt',
             'Updated at',
-            (item) => item.updatedAt,
-            {
-                columnClassName: styles.column,
-            },
+            (item) => item.owner?.updatedAt,
+            { columnClassName: styles.noteColumn },
         ),
-        createElementColumn<NotesListTable, string, { id: number }>(
+        createElementColumn<NotesList, string, { id: string }>(
             'actions',
             'Actions',
             () => (
                 <Button
                     name={undefined}
                     onClick={() => {}}
-                    title="delete"
+                    title="Delete"
                     transparent
                 >
                     <IoTrash />
                 </Button>
             ),
-            (_key, datum) => ({
-                id: Number(datum.id),
-            }),
+            (_key, datum) => ({ id: datum.id }),
         ),
     ]), []);
 
