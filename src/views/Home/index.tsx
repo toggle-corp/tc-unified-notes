@@ -4,7 +4,6 @@ import {
     IoMenu,
     IoSearchOutline,
     IoSettings,
-    IoTrash,
 } from 'react-icons/io5';
 import { useRequest } from '@togglecorp/toggle-request';
 import {
@@ -26,20 +25,31 @@ import useFilterState from '#hooks/useFilterState';
 import styles from './styles.module.css';
 
 type NotesList = {
-    title: string;
-    fullLink: string;
     id: string;
-    content: string;
-    author: string;
+    title: string;
+    url: string;
     permission: string;
-    owner?: {
+    view_count: number;
+    content: string;
+    created_at: string | null;
+    last_change_at: string | null
+    owner: {
         id: string;
-        email: string;
-        profile: string | null;
-        createdAt: string;
-        updatedAt: string | null;
+        display_name: string | null;
+        display_image: string | null;
+    };
+    last_changed_by: {
+        id: string;
+        display_name: string;
+        display_image: string | null;
     };
 };
+
+type NotesResponse = {
+    page: number;
+    page_size: number;
+    results: NotesList[];
+}
 
 type QueryParams = {
     search?: string;
@@ -64,23 +74,24 @@ export function Component() {
         setPage,
         setFilterField,
     } = useFilterState<{
-            title?: string;
-            createdBy?: string;
-            modifiedDate?: string;
-            createdDate?: string;
-            search?: string;
-        }>({
-            filter: {},
-            pageSize: PAGE_SIZE,
-        });
+        createdBy?: string;
+        modifiedDate?: string;
+        createdDate?: string;
+        search?: string;
+    }>({
+        filter: {},
+        pageSize: PAGE_SIZE,
+    });
 
-    const query = useMemo(() => Object.fromEntries(
-        Object.entries(filter).filter(([, value]) => value),
-    ), [filter]);
+    const query = useMemo(() => ({
+        page,
+        page_size: PAGE_SIZE,
+        search: filter.search,
+    }), [filter.search, page]);
 
     const {
         response: notesResponse,
-    } = useRequest<NotesList[], QueryParams, PathVariables>({
+    } = useRequest<NotesResponse, QueryParams, PathVariables>({
         url: '/notes',
         query,
         pathVariables: {},
@@ -100,19 +111,13 @@ export function Component() {
                     {title}
                 </a>
             ),
-            (_key, item) => ({ url: item.fullLink, title: item.title }),
-            { columnClassName: styles.noteColumn },
-        ),
-        createStringColumn<NotesList, string>(
-            'ownerEmail',
-            'Created by',
-            (item) => item.owner?.email,
+            (_key, item) => ({ url: item.url, title: item.title }),
             { columnClassName: styles.noteColumn },
         ),
         createStringColumn<NotesList, string>(
             'author',
             'Author',
-            (item) => item.author,
+            (item) => item?.owner?.display_name,
             { columnClassName: styles.noteColumn },
         ),
         createStringColumn<NotesList, string>(
@@ -124,29 +129,14 @@ export function Component() {
         createDateColumn<NotesList, string>(
             'createdAt',
             'Created at',
-            (item) => item.owner?.createdAt,
+            (item) => item.created_at,
             { columnClassName: styles.noteColumn },
         ),
         createStringColumn<NotesList, string>(
             'updateAt',
             'Updated at',
-            (item) => item.owner?.updatedAt,
+            (item) => item.last_change_at,
             { columnClassName: styles.noteColumn },
-        ),
-        createElementColumn<NotesList, string, { id: string }>(
-            'actions',
-            'Actions',
-            () => (
-                <Button
-                    name={undefined}
-                    onClick={() => {}}
-                    title="Delete"
-                    transparent
-                >
-                    <IoTrash />
-                </Button>
-            ),
-            (_key, datum) => ({ id: datum.id }),
         ),
     ]), []);
 
@@ -158,13 +148,6 @@ export function Component() {
                     showHeader
                     headingDescription={(
                         <div className={styles.actions}>
-                            <TextInput
-                                placeholder="Search"
-                                onChange={setFilterField}
-                                value={filter.search}
-                                name="search"
-                                icons={<IoSearchOutline />}
-                            />
                             <Button
                                 name="settings"
                                 icons={<IoSettings />}
@@ -181,11 +164,13 @@ export function Component() {
                         <div className={styles.filters}>
                             <div className={styles.filtersContainer}>
                                 <TextInput
-                                    label="Title"
-                                    placeholder="Title"
+                                    placeholder="Search"
                                     onChange={setFilterField}
-                                    value={filter.title}
-                                    name="title"
+                                    value={filter.search}
+                                    name="search"
+                                    icons={
+                                        <IoSearchOutline />
+                                    }
                                 />
                                 <TextInput
                                     name="createdBy"
@@ -222,10 +207,9 @@ export function Component() {
                     )}
                     footerActions={(
                         <Pager
-                            infoHidden
                             itemsPerPageControlHidden
                             activePage={page}
-                            itemsCount={notesResponse?.length || 0}
+                            itemsCount={notesResponse?.results?.length || 0}
                             maxItemsPerPage={PAGE_SIZE}
                             onActivePageChange={setPage}
                         />
@@ -237,7 +221,7 @@ export function Component() {
                         columns={columns}
                         headerCellClassName={styles.headerCell}
                         headerRowClassName={styles.headerRow}
-                        data={notesResponse}
+                        data={notesResponse?.results}
                     />
                 </Container>
             </Page>
