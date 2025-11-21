@@ -5,7 +5,6 @@ import {
     IoSearchOutline,
     IoSettings,
 } from 'react-icons/io5';
-import { useRequest } from '@togglecorp/toggle-request';
 import {
     Button,
     createDateColumn,
@@ -21,51 +20,15 @@ import { createElementColumn } from '#components/CreateElementColumn';
 import Navbar from '#components/Navbar';
 import Page from '#components/Page';
 import useFilterState from '#hooks/useFilterState';
+import { useRequest } from '#utils/restRequest';
+import { NotesList } from '#utils/types';
 
 import styles from './styles.module.css';
-
-type NotesList = {
-    id: string;
-    title: string;
-    url: string;
-    permission: string;
-    view_count: number;
-    content: string;
-    created_at: string | null;
-    last_change_at: string | null
-    owner: {
-        id: string;
-        display_name: string | null;
-        display_image: string | null;
-    };
-    last_changed_by: {
-        id: string;
-        display_name: string;
-        display_image: string | null;
-    };
-};
-
-type NotesResponse = {
-    page: number;
-    page_size: number;
-    results: NotesList[];
-}
-
-type QueryParams = {
-    search?: string;
-    page?: number;
-    pageSize?: number;
-};
-
-type PathVariables = {
-    id?: string;
-};
 
 type NotesListTable = NonNullable<NotesList>;
 const keySelector = (option: NotesListTable) => option.id;
 const PAGE_SIZE = 10;
 
-/** @knipignore */
 // eslint-disable-next-line import/prefer-default-export
 export function Component() {
     const {
@@ -91,7 +54,7 @@ export function Component() {
 
     const {
         response: notesResponse,
-    } = useRequest<NotesResponse, QueryParams, PathVariables>({
+    } = useRequest({
         url: '/notes',
         query,
         pathVariables: {},

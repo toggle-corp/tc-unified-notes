@@ -10,7 +10,7 @@ type ResponseError = {
     originalResponse: Response,
     responseText: string;
 }
-/** @knipignore */
+
 export interface TransformedError {
     value: {
         messageForNotification: string,
