@@ -1,68 +1,85 @@
-import { useMemo } from 'react';
 import {
-    IoGridOutline,
-    IoMenu,
-    IoSearchOutline,
-    IoSettings,
-} from 'react-icons/io5';
+    useMemo,
+    useState,
+} from 'react';
+import { IoSearchOutline } from 'react-icons/io5';
 import {
-    Button,
-    createDateColumn,
-    createStringColumn,
     DateInput,
     Pager,
+    SelectInput,
     Table,
     TextInput,
-} from '@togglecorp/toggle-ui';
+} from '@ifrc-go/ui';
+import { SortContext } from '@ifrc-go/ui/contexts';
+import {
+    createDateColumn,
+    createElementColumn,
+    createStringColumn,
+} from '@ifrc-go/ui/utils';
 
 import Container from '#components/Container';
-import { createElementColumn } from '#components/CreateElementColumn';
 import Navbar from '#components/Navbar';
 import Page from '#components/Page';
+import { components } from '#generated/types';
+import useDebouncedValue from '#hooks/useDebouncedValue';
 import useFilterState from '#hooks/useFilterState';
-import { useRequest } from '#utils/restRequest';
-import { NotesList } from '#utils/types';
+import {
+    UnifiedApiResponse,
+    useRequest,
+} from '#utils/restRequest';
 
 import styles from './styles.module.css';
 
-type NotesListTable = NonNullable<NotesList>;
-const keySelector = (option: NotesListTable) => option.id;
+type OrderByType = components['schemas']['NoteOrderBy'];
+
+type UsersResponse = UnifiedApiResponse<'/users'>
+type NotesResponse = UnifiedApiResponse<'/notes'>
+type NotesList = NonNullable<NonNullable<NotesResponse>['results']>[number];
+type UsersList = NonNullable<UsersResponse>[number]
+
+const keySelector = (option: NotesList) => option.id;
+
+function usersListKeySelector(type: UsersList) {
+    return type.id;
+}
+function labelSelector(type: UsersList) {
+    return type.display_name ?? '?';
+}
 const PAGE_SIZE = 10;
 
 // eslint-disable-next-line import/prefer-default-export
 export function Component() {
     const {
+        ordering: orderingByFilterState,
+        orderingByDesc,
         filter,
         page,
+        limit,
+        sortState,
         setPage,
         setFilterField,
     } = useFilterState<{
-        createdBy?: string;
-        modifiedDate?: string;
-        createdDate?: string;
+        createdAt?: string;
+        lastChangeAt?: string;
         search?: string;
+        title?: string;
     }>({
         filter: {},
         pageSize: PAGE_SIZE,
     });
 
-    const query = useMemo(() => ({
-        page,
-        page_size: PAGE_SIZE,
-        search: filter.search,
-    }), [filter.search, page]);
+    const [searchText, setSearchText] = useState<string | undefined>(undefined);
+    const [titleText, setTitleText] = useState<string | undefined>(undefined);
+    const [createdByValue, setCreatedByValue] = useState<string | undefined>(undefined);
 
-    const {
-        response: notesResponse,
-    } = useRequest({
-        url: '/notes',
-        query,
-        pathVariables: {},
-    });
+    const debouncedSearch = useDebouncedValue(searchText)?.trim();
+    const debouncedTitle = useDebouncedValue(titleText)?.trim();
+    const debouncedCreatedBy = useDebouncedValue(createdByValue)?.trim();
 
     const columns = useMemo(() => ([
+        // NOTE: we need to create link column.
         createElementColumn<NotesList, string, { url: string; title: string }>(
-            'title',
+            'TITLE',
             'Title',
             ({ url, title }) => (
                 <a
@@ -75,117 +92,143 @@ export function Component() {
                 </a>
             ),
             (_key, item) => ({ url: item.url, title: item.title }),
-            { columnClassName: styles.noteColumn },
         ),
         createStringColumn<NotesList, string>(
-            'author',
+            'OWNER',
             'Author',
             (item) => item?.owner?.display_name,
-            { columnClassName: styles.noteColumn },
+            { sortable: true },
         ),
         createStringColumn<NotesList, string>(
-            'permission',
+            'PERMISSION',
             'Permission',
             (item) => item.permission,
-            { columnClassName: styles.noteColumn },
+            { sortable: true },
         ),
         createDateColumn<NotesList, string>(
-            'createdAt',
+            'CREATED_AT',
             'Created at',
             (item) => item.created_at,
-            { columnClassName: styles.noteColumn },
+            { sortable: true },
         ),
-        createStringColumn<NotesList, string>(
-            'updateAt',
+        createDateColumn<NotesList, string>(
+            'LAST_CHANGE_AT',
             'Updated at',
             (item) => item.last_change_at,
-            { columnClassName: styles.noteColumn },
+            { sortable: true },
         ),
     ]), []);
+
+    const ordering = orderingByFilterState as OrderByType;
+
+    const query = useMemo(() => ({
+        page,
+        page_size: PAGE_SIZE,
+        search: debouncedSearch,
+        title: debouncedTitle,
+        created_at__lte: filter.createdAt,
+        last_change_at__lte: filter.lastChangeAt,
+        created_by: debouncedCreatedBy,
+        order_by: ordering,
+        order_as_desc: orderingByDesc,
+    }), [
+        debouncedSearch,
+        orderingByDesc,
+        debouncedTitle,
+        ordering,
+        debouncedCreatedBy,
+        page,
+        filter.createdAt,
+        filter.lastChangeAt,
+    ]);
+
+    const {
+        response: notesResponse,
+        pending: notesResponsePending,
+    } = useRequest({
+        url: '/notes',
+        query,
+        pathVariables: {},
+    });
+
+    const {
+        response: usersResponse,
+        pending: usersResponsePending,
+    } = useRequest({
+        url: '/users',
+        preserveResponse: true,
+    });
 
     return (
         <>
             <Navbar />
             <Page>
                 <Container
-                    showHeader
-                    headingDescription={(
-                        <div className={styles.actions}>
-                            <Button
-                                name="settings"
-                                icons={<IoSettings />}
-                                transparent
-                            />
-                        </div>
-                    )}
-                />
-                <Container
                     heading="All Notes"
                     headingLevel={5}
                     showHeader
                     headingDescription={(
                         <div className={styles.filters}>
-                            <div className={styles.filtersContainer}>
-                                <TextInput
-                                    placeholder="Search"
-                                    onChange={setFilterField}
-                                    value={filter.search}
-                                    name="search"
-                                    icons={
-                                        <IoSearchOutline />
-                                    }
-                                />
-                                <TextInput
-                                    name="createdBy"
-                                    label="Created by"
-                                    value={filter.createdBy}
-                                    onChange={setFilterField}
-                                />
-                                <DateInput
-                                    name="createdDate"
-                                    label="Created date"
-                                    value={filter.createdDate}
-                                    onChange={setFilterField}
-                                />
-                                <DateInput
-                                    name="modifiedDate"
-                                    label="Modified date"
-                                    value={filter.modifiedDate}
-                                    onChange={setFilterField}
-                                />
-                            </div>
-                            <div className={styles.filterActions}>
-                                <Button
-                                    name="settings"
-                                    icons={<IoMenu />}
-                                    transparent
-                                />
-                                <Button
-                                    name="settings"
-                                    icons={<IoGridOutline />}
-                                    transparent
-                                />
-                            </div>
+                            <TextInput
+                                name="search"
+                                label="Search"
+                                onChange={setSearchText}
+                                value={searchText}
+                                icons={
+                                    <IoSearchOutline />
+                                }
+                            />
+                            <TextInput
+                                name="title"
+                                label="Title"
+                                onChange={setTitleText}
+                                value={titleText}
+                                icons={
+                                    <IoSearchOutline />
+                                }
+                            />
+                            <SelectInput
+                                name="createdBy"
+                                label="Author"
+                                placeholder="All Authors"
+                                value={createdByValue}
+                                onChange={setCreatedByValue}
+                                keySelector={usersListKeySelector}
+                                labelSelector={labelSelector}
+                                options={usersResponse}
+                            />
+                            <DateInput
+                                name="createdAt"
+                                label="Created date"
+                                value={filter.createdAt}
+                                onChange={setFilterField}
+                            />
+                            <DateInput
+                                name="lastChangeAt"
+                                label="Modified date"
+                                value={filter.lastChangeAt}
+                                onChange={setFilterField}
+                            />
                         </div>
                     )}
                     footerActions={(
                         <Pager
-                            itemsPerPageControlHidden
                             activePage={page}
-                            itemsCount={notesResponse?.results?.length || 0}
-                            maxItemsPerPage={PAGE_SIZE}
+                            itemsCount={notesResponse?.total ?? 0}
+                            maxItemsPerPage={limit}
                             onActivePageChange={setPage}
                         />
                     )}
                 >
-                    <Table
-                        className={styles.table}
-                        keySelector={keySelector}
-                        columns={columns}
-                        headerCellClassName={styles.headerCell}
-                        headerRowClassName={styles.headerRow}
-                        data={notesResponse?.results}
-                    />
+                    <SortContext.Provider value={sortState}>
+                        <Table
+                            keySelector={keySelector}
+                            filtered
+                            pending={notesResponsePending || usersResponsePending}
+                            columns={columns}
+                            data={notesResponse?.results}
+                        />
+                    </SortContext.Provider>
                 </Container>
             </Page>
         </>

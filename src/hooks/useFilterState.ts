@@ -21,10 +21,20 @@ function getOrdering(sorting: SortParameter | undefined) {
     if (isNotDefined(sorting)) {
         return undefined;
     }
-    if (sorting.direction === 'asc') {
-        return sorting.name;
+
+    return sorting.name;
+}
+
+function getOrderingByDesc(sorting: SortParameter | undefined) {
+    if (isNotDefined(sorting)) {
+        return undefined;
     }
-    return `-${sorting.name}`;
+
+    if (sorting.direction === 'asc') {
+        return false;
+    }
+
+    return true;
 }
 
 interface ResetFilterAction {
@@ -60,7 +70,7 @@ interface FilterState<FILTER> {
 }
 
 const defaultOrdering: SortParameter = {
-    name: 'id',
+    name: 'LAST_CHANGE_AT',
     direction: 'dsc',
 };
 
@@ -249,6 +259,7 @@ function useFilterState<FILTER extends object>(options: {
 
         rawOrdering: getOrdering(ordering),
         ordering: getOrdering(debouncedState.ordering),
+        orderingByDesc: getOrderingByDesc(debouncedState.ordering),
 
         sortState,
     };

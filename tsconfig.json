@@ -6,7 +6,8 @@
             "#configs/*": ["./src/configs/*"],
             "#contexts/*": ["./src/contexts/*"],
             "#components/*": ["./src/components/*"],
-            "#hooks/*": ["./src/hooks/*"]
+            "#hooks/*": ["./src/hooks/*"],
+            "#generated/*": ["./generated/*"]
         },
 
         "target": "ESNext",

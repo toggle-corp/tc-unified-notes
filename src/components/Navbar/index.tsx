@@ -1,6 +1,6 @@
 import { IoChevronDown } from 'react-icons/io5';
+import { Button } from '@ifrc-go/ui';
 import { _cs } from '@togglecorp/fujs';
-import { Button } from '@togglecorp/toggle-ui';
 
 import Heading from '#components/Heading';
 import PageContainer from '#components/PageContainer';
@@ -26,7 +26,6 @@ function Navbar(props: Props) {
                 <Button
                     name={undefined}
                     icons={<IoChevronDown />}
-                    transparent
                 />
             </PageContainer>
 

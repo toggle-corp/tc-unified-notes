@@ -1,34 +1,18 @@
-.actions{
-    display:flex;
-    justify-content: space-between;
-}
 .filters{
     display:flex;
     justify-content: space-between;
-
-    .filters-container{
-        display:flex;
-        gap: var(--un-spacing-lg);
-    }
-
-    .filter-actions{
-        display:flex;
-    }
 }
 .table {
     background-color: var(--un-color-background);
+    width: 100%;
+
     .header-row {
-     
         .header-cell {
             >* {
                 font-weight: var(--un-font-weight-bold);
             }
         }
     } 
-
-    .note-column{
-        max-width:15rem;
-    }
 } 
 .url-action{
     width: 0;

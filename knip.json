@@ -4,6 +4,9 @@
         "src/**/*.test.tsx",
         "src/index.tsx!"
     ],
+    "ignoreDependencies": [
+        "openapi-typescript"
+    ],
     "project": [
         "src/**/*.d.ts",
         "src/**/*.test.tsx",

@@ -1,4 +1,7 @@
-import { _cs } from '@togglecorp/fujs';
+import {
+    _cs,
+    isDefined,
+} from '@togglecorp/fujs';
 
 import Footer from '#components/Footer';
 import Header from '#components/Header';
@@ -68,7 +71,8 @@ function Container(props: Props) {
         footerIcons,
     } = props;
 
-    const showFooter = footerIcons || footerContent || footerActions;
+    const showFooter = isDefined(footerIcons)
+        || isDefined(footerContent) || isDefined(footerActions);
 
     if (
         !children

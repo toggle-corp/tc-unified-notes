@@ -1,29 +1,27 @@
 import {
     RequestContext,
-    RequestOptions,
     useRequest,
 } from '@togglecorp/toggle-request';
 
-import { NotesList } from '#utils/types';
+import { paths as unifiedPaths } from '#generated/types';
 
-import { TransformedError } from './unified';
+import {
+    ApiResponse,
+    CustomRequestOptions,
+    CustomRequestReturn,
+    VALID_METHOD,
+} from './overrideTypes';
 
-type NotesResponse = {
-    page: number;
-    page_size: number;
-    results: NotesList[];
-}
+export type UnifiedApiResponse<URL extends keyof unifiedPaths, METHOD extends 'GET' | 'POST' | 'PUT' | 'PATCH' = 'GET'> = ApiResponse<unifiedPaths, URL, METHOD>;
 
 /** @knipignore */
 // eslint-disable-next-line max-len
-const useUnifiedRequest: (
-    requestOptions: RequestOptions<NotesResponse, TransformedError, unknown>
-) => {
-    response: NotesResponse | undefined;
-    pending: boolean;
-    error: TransformedError | undefined;
-    retrigger: () => void;
-} = useRequest;
+const useUnifiedRequest = useRequest as <
+    PATH extends keyof unifiedPaths,
+    METHOD extends VALID_METHOD | undefined = 'GET',
+>(
+    requestOptions: CustomRequestOptions<unifiedPaths, PATH, METHOD>
+) => CustomRequestReturn<unifiedPaths, PATH, METHOD>;
 
 export {
     RequestContext,
