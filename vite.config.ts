@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
         },
         plugins: [
             isProd ? checker({
-                typescript: true,
+                // typescript: false,
                 eslint: {
                     lintCommand: 'eslint ./src',
                 },

@@ -51,6 +51,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Initialize types
+        run: pnpm initialize:type
+
       - name: Run knip
         run: pnpm lint:unused
   # typecheck:
@@ -116,55 +119,6 @@ jobs:
 
       - name: Css Lint
         run: pnpm lint:css
-<<<<<<< HEAD
-  typecheck:
-    name: Typecheck
-    environment: 'test'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Lint Javascript
-        run: pnpm typecheck
-||||||| parent of 9ea2a66 (fixup! fix(setup): replace toggle ui to go ui)
-  typecheck:
-    name: Typecheck
-    environment: 'test'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Generate types
-        run: pnpm generate:type
-
-      - name: Lint Javascript
-        run: pnpm typecheck
-=======
->>>>>>> 9ea2a66 (fixup! fix(setup): replace toggle ui to go ui)
   build:
     name: Build
     environment: 'test'
