@@ -35,7 +35,7 @@ COPY . /code/
 FROM builder AS web-app-serve-build
 
 ENV APP_TITLE=TC-Unified-Notes
-ENV APP_UNIFIED_API_ENDPOINT=http://192.168.88.52:8020/
+ENV APP_UNIFIED_API_ENDPOINT=https://notes-api.local.togglecorp.com/
 
 
 RUN WEB_APP_SERVE_ENABLED=true pnpm build

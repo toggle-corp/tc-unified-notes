@@ -31,9 +31,7 @@ export default defineConfig(({ mode }) => {
             reactSwc(),
             tsconfigPaths(),
             webfontDownload(),
-            validateEnv({
-                configFile: 'env.ts',
-            }),
+            validateEnv(),
             isProd ? compression() : undefined,
         ],
         css: {
