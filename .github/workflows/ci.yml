@@ -8,6 +8,7 @@ on:
 
 env:
   APP_TITLE: ${{ vars.APP_TITLE }}
+  APP_UNIFIED_API_ENDPOINT: ${{ vars.APP_UNIFIED_API_ENDPOINT }}
   GITHUB_WORKFLOW: true
 
 jobs:
@@ -56,6 +57,8 @@ jobs:
 
       - name: Run knip
         run: pnpm lint:unused
+
+  # NOTE:we don't need it for now
   # typecheck:
   #   name: Typecheck
   #   environment: 'test'
@@ -98,6 +101,7 @@ jobs:
 
   #     - name: Lint Javascript
   #       run: pnpm lint:js
+
   css-lint:
     name: Lint CSS
     environment: 'test'
