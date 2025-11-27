@@ -1,0 +1,16 @@
+.navbar {
+    background-color: #E9E9E9;
+    padding: var(--un-spacing-sm) var(--un-spacing-sm);
+
+    .top {
+        .top-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: var(--un-spacing-xs) var(--un-spacing-sm);
+            padding: var(--un-spacing-sm) var(--un-spacing-md);
+
+        }
+    }
+}

@@ -1,3 +1,25 @@
-.card {
-    padding: var(--padding-medium);
+.filters{
+    display:flex;
+    justify-content: space-between;
+}
+.table {
+    background-color: var(--un-color-background);
+    width: 100%;
+
+    .header-row {
+        .header-cell {
+            >* {
+                font-weight: var(--un-font-weight-bold);
+            }
+        }
+    } 
+} 
+.url-action{
+    width: 0;
+    text-decoration: none;
+    color: var(--un-color-text);
+
+    &:hover {
+        text-decoration:underline;
+    }
 }

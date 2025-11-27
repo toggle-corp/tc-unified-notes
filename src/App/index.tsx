@@ -1,12 +1,10 @@
-import '@togglecorp/toggle-ui/build/index.css';
-
 import {
     createBrowserRouter,
     RouterProvider,
 } from 'react-router-dom';
-import { RequestContext } from '@togglecorp/toggle-request';
 
 import RouteContext from '#contexts/route';
+import { RequestContext } from '#utils/restRequest';
 import {
     unifiedError,
     unifiedOptions,
