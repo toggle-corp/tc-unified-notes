@@ -1,7 +1,14 @@
-.filters{
-    display:flex;
-    justify-content: space-between;
+.header-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--un-spacing-lg);
+
+    .filters{
+        display:flex;
+        gap: var(--un-spacing-lg);
+    }
 }
+
 .table {
     background-color: var(--un-color-background);
     width: 100%;
@@ -12,8 +19,9 @@
                 font-weight: var(--un-font-weight-bold);
             }
         }
-    } 
-} 
+    }
+}
+
 .url-action{
     width: 0;
     text-decoration: none;

@@ -1,5 +1,3 @@
-import { IoChevronDown } from 'react-icons/io5';
-import { Button } from '@ifrc-go/ui';
 import { _cs } from '@togglecorp/fujs';
 
 import Heading from '#components/Heading';
@@ -23,10 +21,6 @@ function Navbar(props: Props) {
                 <Heading level={5}>
                     Unified Notes
                 </Heading>
-                <Button
-                    name={undefined}
-                    icons={<IoChevronDown />}
-                />
             </PageContainer>
 
         </nav>

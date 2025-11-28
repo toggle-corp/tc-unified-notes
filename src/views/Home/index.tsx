@@ -59,8 +59,10 @@ export function Component() {
         setPage,
         setFilterField,
     } = useFilterState<{
-        createdAt?: string;
-        lastChangeAt?: string;
+        createdAtLte?: string;
+        createdAtGte?: string;
+        lastChangeAtLte?: string;
+        lastChangeAtGte?: string;
         search?: string;
         title?: string;
     }>({
@@ -126,8 +128,10 @@ export function Component() {
         page_size: PAGE_SIZE,
         search: debouncedSearch,
         title: debouncedTitle,
-        created_at__lte: filter.createdAt,
-        last_change_at__lte: filter.lastChangeAt,
+        created_at__lte: filter.createdAtLte,
+        created_at__gte: filter.createdAtGte,
+        last_change_at__lte: filter.lastChangeAtLte,
+        last_change_at__gte: filter.lastChangeAtGte,
         created_by: debouncedCreatedBy,
         order_by: ordering,
         order_as_desc: orderingByDesc,
@@ -138,8 +142,10 @@ export function Component() {
         ordering,
         debouncedCreatedBy,
         page,
-        filter.createdAt,
-        filter.lastChangeAt,
+        filter.createdAtLte,
+        filter.createdAtGte,
+        filter.lastChangeAtLte,
+        filter.lastChangeAtGte,
     ]);
 
     const {
@@ -167,49 +173,66 @@ export function Component() {
                     heading="All Notes"
                     headingLevel={5}
                     showHeader
+                    headingDescriptionContainerClassName={styles.headerDescription}
                     headingDescription={(
-                        <div className={styles.filters}>
-                            <TextInput
-                                name="search"
-                                label="Search"
-                                onChange={setSearchText}
-                                value={searchText}
-                                icons={
-                                    <IoSearchOutline />
-                                }
-                            />
-                            <TextInput
-                                name="title"
-                                label="Title"
-                                onChange={setTitleText}
-                                value={titleText}
-                                icons={
-                                    <IoSearchOutline />
-                                }
-                            />
-                            <SelectInput
-                                name="createdBy"
-                                label="Author"
-                                placeholder="All Authors"
-                                value={createdByValue}
-                                onChange={setCreatedByValue}
-                                keySelector={usersListKeySelector}
-                                labelSelector={labelSelector}
-                                options={usersResponse}
-                            />
-                            <DateInput
-                                name="createdAt"
-                                label="Created date"
-                                value={filter.createdAt}
-                                onChange={setFilterField}
-                            />
-                            <DateInput
-                                name="lastChangeAt"
-                                label="Modified date"
-                                value={filter.lastChangeAt}
-                                onChange={setFilterField}
-                            />
-                        </div>
+                        <>
+                            <div className={styles.filters}>
+                                <TextInput
+                                    name="search"
+                                    label="Search"
+                                    onChange={setSearchText}
+                                    value={searchText}
+                                    icons={
+                                        <IoSearchOutline />
+                                    }
+                                />
+                                <TextInput
+                                    name="title"
+                                    label="Title"
+                                    onChange={setTitleText}
+                                    value={titleText}
+                                    icons={
+                                        <IoSearchOutline />
+                                    }
+                                />
+                                <SelectInput
+                                    name="createdBy"
+                                    label="Author"
+                                    placeholder="All Authors"
+                                    value={createdByValue}
+                                    onChange={setCreatedByValue}
+                                    keySelector={usersListKeySelector}
+                                    labelSelector={labelSelector}
+                                    options={usersResponse}
+                                />
+                            </div>
+                            <div className={styles.filters}>
+                                <DateInput
+                                    name="createdAtGte"
+                                    label="Created start date"
+                                    value={filter.createdAtGte}
+                                    onChange={setFilterField}
+                                />
+                                <DateInput
+                                    name="createdAtLte"
+                                    label="Created end date"
+                                    value={filter.createdAtLte}
+                                    onChange={setFilterField}
+                                />
+                                <DateInput
+                                    name="lastChangeAtGte"
+                                    label="Modified start date"
+                                    value={filter.lastChangeAtLte}
+                                    onChange={setFilterField}
+                                />
+                                <DateInput
+                                    name="lastChangeAtLte"
+                                    label="Modified end date"
+                                    value={filter.lastChangeAtGte}
+                                    onChange={setFilterField}
+                                />
+                            </div>
+                        </>
                     )}
                     footerActions={(
                         <Pager
