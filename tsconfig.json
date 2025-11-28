@@ -3,7 +3,11 @@
         "paths": {
             "#views/*": ["./src/views/*"],
             "#utils/*": ["./src/utils/*"],
-            "#contexts/*": ["./src/contexts/*"]
+            "#configs/*": ["./src/configs/*"],
+            "#contexts/*": ["./src/contexts/*"],
+            "#components/*": ["./src/components/*"],
+            "#hooks/*": ["./src/hooks/*"],
+            "#generated/*": ["./generated/*"]
         },
 
         "target": "ESNext",
@@ -30,7 +34,9 @@
         "noFallthroughCasesInSwitch": true
     },
     "include": [
-        "src"
+        "src",
+        ".eslintrc.cjs"
+
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -3,7 +3,7 @@ import { ContextInterface } from '@togglecorp/toggle-request';
 import { resolveUrl } from '#utils/resolveUrl';
 
 const CONTENT_TYPE_JSON = 'application/json';
-const unifiedApi = import.meta.env.APP_UNIFIED_ENDPOINT ?? '';
+const unifiedApi = import.meta.env.APP_UNIFIED_API_ENDPOINT ?? '';
 
 type ResponseError = {
     status: number;
@@ -119,6 +119,7 @@ export const unifiedOptions: UnifiedContextInterface['transformOptions'] = (
     const val: ReturnType<UnifiedContextInterface['transformOptions']> = {
         method,
         headers: {
+            Accept: CONTENT_TYPE_JSON,
             'Content-Type': CONTENT_TYPE_JSON,
         },
         ...otherOptions,

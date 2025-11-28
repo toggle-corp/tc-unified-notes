@@ -1,32 +1,29 @@
 import {
-    LazyRequestOptions,
     RequestContext,
-    RequestOptions,
-    useLazyRequest,
     useRequest,
 } from '@togglecorp/toggle-request';
 
-import { TransformedError } from './unified';
+import { paths as unifiedPaths } from '#generated/types';
 
+import {
+    ApiResponse,
+    CustomRequestOptions,
+    CustomRequestReturn,
+    VALID_METHOD,
+} from './overrideTypes';
+
+export type UnifiedApiResponse<URL extends keyof unifiedPaths, METHOD extends 'GET' | 'POST' | 'PUT' | 'PATCH' = 'GET'> = ApiResponse<unifiedPaths, URL, METHOD>;
+
+/** @knipignore */
 // eslint-disable-next-line max-len
-const useUnifiedLazyRequest: <R, C = null>(requestOptions: LazyRequestOptions<R, null, C, null>) => {
-    response: R | undefined;
-    pending: boolean;
-    trigger: (ctx: C) => void;
-    context: C | undefined,
-} = useLazyRequest;
-
-const useUnifiedRequest: <R>(
-    requestOptions: RequestOptions<R, TransformedError, null>
-) => {
-    response: R | undefined;
-    pending: boolean;
-    error: TransformedError | undefined;
-    retrigger: () => void;
-} = useRequest;
+const useUnifiedRequest = useRequest as <
+    PATH extends keyof unifiedPaths,
+    METHOD extends VALID_METHOD | undefined = 'GET',
+>(
+    requestOptions: CustomRequestOptions<unifiedPaths, PATH, METHOD>
+) => CustomRequestReturn<unifiedPaths, PATH, METHOD>;
 
 export {
     RequestContext,
-    useUnifiedLazyRequest as useLazyRequest,
     useUnifiedRequest as useRequest,
 };

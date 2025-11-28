@@ -1,0 +1,22 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .page-header {
+        background-color: var(--un-color-background);
+    }
+
+    .main-section-container {
+        flex-grow: 1;
+        background-color: var( --un-color-background);
+
+        &.with-background-color {
+            background-color: var(--un-color-background);
+        }
+
+        .main-section {
+            padding: var(--un-spacing-lg) var(--un-spacing-md);
+        }
+    }
+}

@@ -3,14 +3,52 @@
 }
 
 :root {
-    --background-color: #ffffff;
-    --text-color: #213547;
+    --un-font-family-nunito:'Nunito', system-ui, sans-serif;
+    --base-font-size: 1rem;
+    --base-spacing: 1rem;
+    --base-radius: 0.5rem;
 
-    --shadow-color: #646cffaa;
+    --un-font-size-xs: calc(var(--base-font-size) * 0.694);
+    --un-font-size-sm: calc(var(--base-font-size) * 0.833);
+    --un-font-size-md: var(--base-font-size);
+    --un-font-size-lg: calc(var(--base-font-size)* 1.2);
+    --un-font-size-xl: calc(var(--base-font-size)* 1.44);
+    --un-font-size-2xl: calc(var(--base-font-size)* 1.728);
+    --un-font-size-3xl: calc(var(--base-font-size)* 2.074);
+    --un-font-size-4xl: calc(var(--base-font-size)* 2.488);
+    --un-font-size-5xl: calc(var(--base-font-size)* 2.986);
 
-    --padding-small: 1.5em;
-    --padding-medium: 2em;
+    --un-font-weight-regular: 200;
+    --un-font-weight-medium: 400;
+    --un-font-weight-bold: 600;
 
+    --un-line-height-2xl: 76px;
+    --un-line-height-xl: 62px;
+    --un-line-height-lg: 48px;
+    --un-line-height-md: 41px;
+    --un-line-height-sm: 32px;
+    --un-line-height-xs: 28px;
+    --un-line-height-2xs: 24px;
+
+    --un-spacing-2xs: calc(var(--base-spacing) * 0.125);
+    --un-spacing-xs: calc(var(--base-spacing) * 0.25);
+    --un-spacing-sm: calc(var(--base-spacing) * 0.5);
+    --un-spacing-md: var(--base-spacing);
+    --un-spacing-lg: calc(var(--base-spacing) * 2);
+    --un-spacing-xl: calc(var(--base-spacing) * 4);
+    --un-spacing-2xl: calc(var(--base-spacing) * 8);
+
+
+    --un-color-text-black: rgb(0 0 0 / 1);
+    --un-color-text: rgb(0 0 0 / 0.8);
+    --un-color-text-light: rgb(0 0 0 / 0.5);
+
+    --un-color-background: #f7f7f7;
+    --un-color-foreground: #ffffff;
+
+    --un-width-content-max: 50rem;
+    --un-page-header-description-width-max: var(--un-width-content-max);
+    --un-page-width-max: 90rem;
 }
 
 html {
@@ -22,25 +60,18 @@ html {
 }
 
 body {
-    display: flex;
-    margin: 0;
-    background-color: var(--background-color);
-    min-width: 320px;
-    min-height: 100vh;
-    overflow-x: hidden;
-    place-items: center;
-    text-rendering: optimizeLegibility;
-    line-height: 1.5;
-    color: var(--text-color);
-    font-family: 'Nunito', system-ui, sans-serif;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    color: var(--un-color-text);
+    font-family: var(--un-font-family-nunito);
+    font-size: var(--un-font-size-md);
+    font-weight: var(--un-font-weight-medium);
+    font-style: normal;
+    font-optical-sizing: auto;
 
-    color-scheme: light dark;
-
-    font-synthesis: none;
-    -webkit-text-size-adjust: 100%;
+    @media screen {
+        margin: 0;
+        background-color: var(--un-color-background);
+        padding: 0;
+    }
 }
 
 ul, ol, p {

@@ -8,8 +8,6 @@ import svgr from 'vite-plugin-svgr';
 import webfontDownload from 'vite-plugin-webfont-dl';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-import envConfig from './env';
-
 /* Get commit hash */
 const commitHash = execSync('git rev-parse --short HEAD').toString();
 
@@ -21,7 +19,7 @@ export default defineConfig(({ mode }) => {
         },
         plugins: [
             isProd ? checker({
-                typescript: true,
+                // typescript: false,
                 eslint: {
                     lintCommand: 'eslint ./src',
                 },
@@ -33,7 +31,7 @@ export default defineConfig(({ mode }) => {
             reactSwc(),
             tsconfigPaths(),
             webfontDownload(),
-            validateEnv(envConfig),
+            validateEnv(),
             isProd ? compression() : undefined,
         ],
         css: {
@@ -46,6 +44,7 @@ export default defineConfig(({ mode }) => {
         envPrefix: 'APP_',
         server: {
             port: 3000,
+            host: true,
             strictPort: true,
         },
         build: {

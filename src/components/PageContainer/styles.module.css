@@ -1,0 +1,11 @@
+.page-container {
+    .content {
+        margin: 0 auto;
+        padding: var(--un-spacing-lg);
+        width: 100%;
+
+        @media screen {
+            max-width: var(--un-page-width-max);
+        }
+    }
+}
